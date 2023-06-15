@@ -28,6 +28,9 @@ struct MenuGridView: View {
 
                     FavoriteTileView(menuItem: menu(id: fav))
                         .matchedGeometryEffect(id: fav, in: nspace)
+                        .onTapGesture {
+                            selectedItem = menu(id: fav)
+                        }
                         .onLongPressGesture {
                             if let index = favouriteItem.firstIndex(where: {$0 == fav}) {
                                 favouriteItem.remove(at: index)

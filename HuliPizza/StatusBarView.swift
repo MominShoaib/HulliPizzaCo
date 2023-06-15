@@ -10,6 +10,7 @@ import SwiftUI
 struct StatusBarView: View {
     @ObservedObject var orders : OrderModel
     @Binding var showOrders : Bool
+    @Binding var showGrid : Bool
     
     var body: some View {
         
@@ -23,9 +24,9 @@ struct StatusBarView: View {
                 
             }
             Button{
-                showOrders.toggle()
+                showGrid.toggle()
             } label: {
-                Image(systemName : showOrders ? "grid" : "menu")
+                Image(systemName : showGrid ? "grid" : "list.dash")
                 
             }
             Spacer()
@@ -46,5 +47,5 @@ struct StatusBarView: View {
 }
 
 #Preview {
-    StatusBarView(orders: OrderModel(), showOrders : .constant(false))
+    StatusBarView(orders: OrderModel(), showOrders : .constant(false), showGrid: .constant(true))
 }

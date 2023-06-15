@@ -11,6 +11,7 @@ struct ContentView: View {
     var menu : [MenuItem]
     @StateObject var orders : OrderModel = OrderModel()
     @State private var showOrders = true
+    @State private var showGrid = true
     @State private var selectedItem : MenuItem = noMenuItem
     var body: some View {
         VStack {
@@ -20,13 +21,13 @@ struct ContentView: View {
                 .environment(\.colorScheme,.light)
             
             //first syntax of button
-//            Button("Switch View"){
-//                showOrders.toggle()
-//            }
-//            .foregroundStyle(.secondary)
+            //            Button("Switch View"){
+            //                showOrders.toggle()
+            //            }
+            //            .foregroundStyle(.secondary)
             //second syntax :
-            StatusBarView(orders: orders, showOrders: $showOrders)
-
+            StatusBarView(orders: orders, showOrders: $showOrders, showGrid: $showGrid)
+            
             if showOrders {
                 OrderView(orders: orders)
                     .padding(5)
@@ -35,8 +36,16 @@ struct ContentView: View {
                 MenuItemView(item: $selectedItem, orders: orders)
                     .padding(5)
                     .background(.thinMaterial, in : RoundedRectangle(cornerRadius: 10))
-                MenuView(menu: menu, selectedItem: $selectedItem)
             }
+            
+            if showGrid {
+                MenuGridView(menu: menu)
+            } else {
+                MenuView(menu: menu, selectedItem: $selectedItem)
+                
+            }
+            
+            
             
             Spacer()
         }
