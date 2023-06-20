@@ -8,44 +8,45 @@
 import SwiftUI
 
 struct StatusBarView: View {
-    @ObservedObject var orders : OrderModel
-    @Binding var showOrders : Bool
-    @Binding var showGrid : Bool
-    
+    @Binding var showOrders:Bool
+    @Binding var presentGrid:Bool
+    @EnvironmentObject var orders:OrderModel
     var body: some View {
-        
         HStack {
             Text("\(orders.orderItems.count) orders")
             Spacer()
             Button{
                 showOrders.toggle()
-            } label: {
-                Image(systemName : showOrders ? "cart" : "menucard")
-                
+            } label:{
+                Image(systemName: showOrders ? "cart" : "menucard")
+                    
             }
-            Button{
-                showGrid.toggle()
-            } label: {
-                Image(systemName : showGrid ? "grid" : "list.dash")
-                
+            if !showOrders {
+                Button{
+                    presentGrid.toggle()
+                } label:{
+                    Image(systemName: presentGrid ? "square.grid.3x2" : "list.bullet")
+                        
+                }
+            .padding(.leading,10)
             }
             Spacer()
             Label{
-                Text(orders.orderTotal, format: .currency(code: "USD"))
-            }icon: {
+                Text(orders.orderTotal,format: .currency(code: "USD"))
+            }icon:{
                 Image(systemName: orders.orderItems.isEmpty ? "cart" : "cart.circle.fill")
+                
             }
-            
+        
         }
-        .foregroundStyle(.black)
+        .foregroundStyle(.white)
         .font(.title2)
-        
-        
-        
-        
     }
 }
 
-#Preview {
-    StatusBarView(orders: OrderModel(), showOrders : .constant(false), showGrid: .constant(true))
+struct StatusBarView_Previews: PreviewProvider {
+    static var previews: some View {
+        StatusBarView(showOrders: .constant(false), presentGrid: .constant(false)).environmentObject(OrderModel())
+            .background(.black)
+    }
 }

@@ -53,7 +53,7 @@ struct MenuItemView: View {
                 }
                 
                 Button{
-                    orders = OrderItem(id: -99, item: item)
+                    order = OrderItem(id: -99, item: item)
                     presentAlert = true
                 } label: {
                     Spacer()
